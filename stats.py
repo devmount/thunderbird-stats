@@ -11,7 +11,8 @@ def stats():
 	""" read all mail files and collect data """
 	mailfiles = []
 	mails_per_year = { 'in': {}, 'out': {} }
-	mails_per_hour = { 'in': { i:0 for i in range(0,23) }, 'out': { i:0 for i in range(0,23) } }
+	mails_per_month = { 'in': {}, 'out': {} }
+	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
 	# get all mail files
 	for root,_,files in os.walk(maildir):
 		for f in files:
@@ -42,16 +43,19 @@ def stats():
 					maildate = None
 			# save found data
 			if line.startswith('Content-Length: ') and mailtype is not None and maildate is not None:
-				# build mails per year
+				# build mails per year and per month
 				if maildate.tm_year in mails_per_year[mailtype]:
 					mails_per_year[mailtype][maildate.tm_year] += 1
+					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] += 1
 				else:
 					mails_per_year[mailtype][maildate.tm_year] = 1
+					mails_per_month[mailtype][maildate.tm_year] = { i:0 for i in range(1,13) }
+					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] = 1
 				# build average mails per hour
 				mails_per_hour[mailtype][maildate.tm_hour] += 1
 				# stop and jump to next file
 				break
-	print(mails_per_hour)
+
 	return True
 
 # output
