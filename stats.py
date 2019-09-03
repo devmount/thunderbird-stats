@@ -11,10 +11,11 @@ def stats():
 	""" read all mail files and collect data """
 	mailfiles = []
 	mails_per_year = { 'in': {}, 'out': {} }
+	mails_per_hour = { 'in': { i:0 for i in range(0,23) }, 'out': { i:0 for i in range(0,23) } }
 	# get all mail files
-	for root,dirs,files in os.walk(maildir):
+	for root,_,files in os.walk(maildir):
 		for f in files:
-			filename, file_extension = os.path.splitext(f)
+			_,file_extension = os.path.splitext(f)
 			if file_extension == '.eml':
 				mailfiles.append(os.path.join(root, f))
 
@@ -41,12 +42,16 @@ def stats():
 					maildate = None
 			# save found data
 			if line.startswith('Content-Length: ') and mailtype is not None and maildate is not None:
+				# build mails per year
 				if maildate.tm_year in mails_per_year[mailtype]:
 					mails_per_year[mailtype][maildate.tm_year] += 1
 				else:
 					mails_per_year[mailtype][maildate.tm_year] = 1
+				# build average mails per hour
+				mails_per_hour[mailtype][maildate.tm_hour] += 1
+				# stop and jump to next file
 				break
-
+	print(mails_per_hour)
 	return True
 
 # output
