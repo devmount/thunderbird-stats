@@ -1,5 +1,5 @@
 #!/usr/bin/python3.6
-import os, sys, time, locale
+import os, sys, time, locale, json
 from tqdm import tqdm
 
 # root directory of the maildir account directory of thunderbird
@@ -8,7 +8,7 @@ maildir = '/mnt/c/Users/Andreas/AppData/Roaming/Thunderbird/Profiles/z3mwnjgu.de
 address = 'esan2013@yahoo.com'
 
 def stats():
-	""" read all mail files and collect data """
+	""" read all mail files, collect and export data """
 	mailfiles = []
 	mails_per_year = { 'in': {}, 'out': {} }
 	mails_per_month = { 'in': {}, 'out': {} }
@@ -56,6 +56,14 @@ def stats():
 				# stop and jump to next file
 				break
 
+	# export data
+	with open('./src/data/mails-per-year.json', 'w') as f:
+		json.dump(mails_per_year, f)
+	with open('./src/data/mails-per-month.json', 'w') as f:
+		json.dump(mails_per_month, f)
+	with open('./src/data/mails-per-hour.json', 'w') as f:
+		json.dump(mails_per_hour, f)
+		
 	return True
 
 # output
