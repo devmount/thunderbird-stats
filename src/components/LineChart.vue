@@ -24,6 +24,7 @@ export default {
 			for (let i = 0; i < this.datasets.length; i++) {
 				const dataset = this.datasets[i];
 				datasets.push({
+					label: dataset.label,
 					data: dataset.data,
 					borderColor: dataset.color,
 					lineTension: 0.15,
