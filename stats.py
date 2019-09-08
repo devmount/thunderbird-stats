@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 import os, sys, time, locale, json
+# pylint: disable=F0401
 from tqdm import tqdm
 
 # root directory of the maildir account directory of thunderbird
