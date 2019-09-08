@@ -12,6 +12,7 @@ def stats():
 	mails_per_year = { 'in': {}, 'out': {} }
 	mails_per_month = { 'in': {}, 'out': {} }
 	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
+	mails_per_weekday = { 'in': { i:0 for i in range(7) }, 'out': { i:0 for i in range(7) } }
 	# get all mail files
 	for root,_,files in os.walk(maildir):
 		for f in files:
@@ -63,6 +64,8 @@ def stats():
 					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] = 1
 				# build average mails per hour
 				mails_per_hour[mailtype][maildate.tm_hour] += 1
+				# build average mails per weekday
+				mails_per_weekday[mailtype][maildate.tm_wday] += 1
 				# stop and jump to next file
 				break
 
@@ -73,7 +76,9 @@ def stats():
 		json.dump(mails_per_month, f)
 	with open('./src/data/mails-per-hour.json', 'w') as f:
 		json.dump(mails_per_hour, f)
-		
+	with open('./src/data/mails-per-weekday.json', 'w') as f:
+		json.dump(mails_per_weekday, f)
+
 	return True
 
 # output

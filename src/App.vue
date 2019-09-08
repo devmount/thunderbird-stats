@@ -3,6 +3,7 @@
 		<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
 		<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
 		<LineChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
+		<LineChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 	</div>
 </template>
 
@@ -14,6 +15,7 @@ import LineChart from './components/LineChart.vue'
 import MAILS_PER_HOUR from './data/mails-per-hour.json'
 import MAILS_PER_MONTH from './data/mails-per-month.json'
 import MAILS_PER_YEAR from './data/mails-per-year.json'
+import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
 
 // initialize Chart.js default options
 import Chart from 'chart.js'
@@ -28,6 +30,7 @@ export default {
 		mailsPerHour: MAILS_PER_HOUR,
 		mailsPerMonth: MAILS_PER_MONTH,
 		mailsPerYear: MAILS_PER_YEAR,
+		mailsPerWeekday: MAILS_PER_WEEKDAY,
 	},
 	computed: {
 		mailsPerYear () {
@@ -55,7 +58,11 @@ export default {
 				for (const month in din[year]) {
 					months.push(year + '-' + month)
 					dsin.push(din[year][month])
-					dsout.push(dout[year][month])
+					if(dout.hasOwnProperty(year) && dout[year].hasOwnProperty(month)) {
+						dsout.push(dout[year][month])
+					} else {
+						dsout.push(0)
+					}
 				}
 			}
 			return {
@@ -83,6 +90,24 @@ export default {
 				labels: hours
 			}
 		},
+		mailsPerWeekday () {
+			var din = this.$options.stats.mailsPerWeekday.in
+			var dout = this.$options.stats.mailsPerWeekday.out
+			var weekdays = [], dsin = [], dsout = []
+			var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+			for (const weekday in din) {
+				weekdays.push(days[weekday])
+				dsin.push(din[weekday])
+				dsout.push(dout[weekday])
+			}
+			return {
+				datasets: [
+					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)' },
+					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)'  }
+				],
+				labels: weekdays
+			}
+		},
 	},
 }
 </script>
@@ -94,5 +119,5 @@ export default {
 	text-align center
 	color #2c3e50
 	margin 20px auto 0 auto
-	width 600px
+	width 960px
 </style>
