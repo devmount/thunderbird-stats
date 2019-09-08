@@ -3,10 +3,9 @@ import os, sys, time, locale, json
 from tqdm import tqdm
 
 # root directory of the maildir account directory of thunderbird
-maildir = '/mnt/c/Users/Andreas/AppData/Roaming/Thunderbird/Profiles/z3mwnjgu.default/ImapMail/imap.mail.yahoo.com'
+maildir = '/mnt/c/Users/Andreas/AppData/Roaming/Thunderbird/Profiles/z3mwnjgu.default/ImapMail/mail.ud14.udmedia.de'
 # own email address(es)
-address = 'esan2013@yahoo.com'
-
+address = ['@devmount.de', 'andreasffo@web.de', 'hpdesigner@web.de', 'ghetto_song@web.de', 'hpdesigner_20@mailbox.tu-berlin.de', 'andreas.mueller.4@campus.tu-berlin.de', 'devmountde@gmail.com', 'devmount@outlook.de', 'devmount@outlook.com', 'andreas@ap-intermedia.de']
 def stats():
 	""" read all mail files, collect and export data """
 	mailfiles = []
@@ -27,7 +26,7 @@ def stats():
 		for line in open(f, 'r', encoding='latin1'):
 			# decide wether an email was sent or received
 			if line.startswith('From: '):
-				mailtype = 'out' if address in line else 'in'
+				mailtype = 'out' if any(a in line for a in address) else 'in'
 			# get mail date
 			if line.startswith('Date: '):
 				startindex = line.index(',')+2 if ',' in line else line.index(' ')+1
