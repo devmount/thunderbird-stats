@@ -1,5 +1,8 @@
 <template>
 	<div id="app">
+		in: {{ figure.in }}
+		out: {{ figure.out }}
+		total: {{ figure.total }}
 		<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
 		<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
 		<LineChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
@@ -33,6 +36,15 @@ export default {
 		mailsPerWeekday: MAILS_PER_WEEKDAY,
 	},
 	computed: {
+		figure () {
+			var din = Object.values(this.$options.stats.mailsPerYear.in).reduce( (a, c) => a + c, 0 )
+			var dout = Object.values(this.$options.stats.mailsPerYear.out).reduce( (a, c) => a + c, 0 )
+			return {
+				in: din,
+				out: dout,
+				total: din + dout
+			}
+		},
 		mailsPerYear () {
 			var din = this.$options.stats.mailsPerYear.in
 			var dout = this.$options.stats.mailsPerYear.out
@@ -44,8 +56,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)' },
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)'  }
+					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: years
 			}
@@ -67,8 +79,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)' },
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)'  }
+					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: months
 			}
@@ -84,8 +96,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)' },
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)'  }
+					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: hours
 			}
@@ -102,8 +114,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)' },
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)'  }
+					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: weekdays
 			}

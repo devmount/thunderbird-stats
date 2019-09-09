@@ -27,10 +27,11 @@ export default {
 					label: dataset.label,
 					data: dataset.data,
 					borderColor: dataset.color,
+					borderWidth: 2,
 					lineTension: 0.15,
 					pointBorderColor: 'rgb(0, 0, 0, 0)',
-					pointRadius: 15,
-					backgroundColor: 'rgb(0, 0, 0, 0)',
+					pointRadius: 0,
+					backgroundColor: dataset.bcolor,
 				})
 			}
 			new Chart(this.id, {
