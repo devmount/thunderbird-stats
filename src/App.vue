@@ -48,11 +48,13 @@ export default {
 		mailsPerYear () {
 			var din = this.$options.stats.mailsPerYear.in
 			var dout = this.$options.stats.mailsPerYear.out
+			var keys = [...Object.keys(this.$options.stats.mailsPerYear.in),...Object.keys(this.$options.stats.mailsPerYear.out)]
+			var min = Math.min(...keys), max = Math.max(...keys)
 			var years = [], dsin = [], dsout = []
-			for (const year in din) {
-				years.push(year)
-				dsin.push(din[year])
-				dsout.push(dout[year])
+			for (let y = min; y <= max; ++y) {
+				years.push(y)
+				dsin.push(din.hasOwnProperty(y) ? din[y] : 0)
+				dsout.push(dout.hasOwnProperty(y) ? dout[y] : 0)
 			}
 			return {
 				datasets: [
