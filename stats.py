@@ -30,7 +30,7 @@ def stats():
 			if line.startswith('From: '):
 				mailtype = 'out' if any(a in line for a in address) else 'in'
 			# get mail date
-			if line.startswith('Date: '):
+			if line.startswith('Date:'):
 				startindex = line.index(',')+2 if ',' in line else line.index(' ')+1
 				datestring = line[startindex:].strip()
 				datestring = datestring[:datestring.rindex(" ")] if len(datestring.split(" "))>5 else datestring
@@ -69,6 +69,9 @@ def stats():
 				mails_per_weekday[mailtype][maildate.tm_wday] += 1
 				# stop and jump to next file
 				break
+		# else:
+		# 	if mailtype is None and maildate is None:
+		# 		print(open(f, 'r', encoding='latin1').read())
 
 	# export data
 	with open('./src/data/mails-per-year.json', 'w') as f:
