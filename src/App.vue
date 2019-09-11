@@ -6,13 +6,14 @@
 		<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
 		<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
 		<LineChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
-		<LineChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
+		<BarChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 	</div>
 </template>
 
 <script>
 // internal components
 import LineChart from './components/LineChart.vue'
+import BarChart from './components/BarChart.vue'
 
 // chart data
 import MAILS_PER_HOUR from './data/mails-per-hour.json'
@@ -22,12 +23,16 @@ import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
 
 // initialize Chart.js default options
 import Chart from 'chart.js'
-Chart.defaults.global.elements.arc.borderWidth = 0;
+Chart.defaults.global.elements.arc.borderWidth = 0
+Chart.defaults.global.tooltips.mode = 'index'
+Chart.defaults.global.tooltips.intersect = false
+Chart.defaults.global.hover.mode = 'index'
 
 export default {
 	name: 'app',
 	components: {
-		LineChart
+		LineChart,
+		BarChart,
 	},
 	stats: {
 		mailsPerHour: MAILS_PER_HOUR,
