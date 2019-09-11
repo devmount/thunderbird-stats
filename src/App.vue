@@ -1,12 +1,26 @@
 <template>
 	<div id="app">
-		in: {{ figure.in }}
-		out: {{ figure.out }}
-		total: {{ figure.total }}
-		<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
-		<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
-		<LineChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
-		<BarChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
+		<div class="container grid-lg">
+			<div class="columns">
+				<div class="column col-12">
+					in: {{ figure.in }}
+					out: {{ figure.out }}
+					total: {{ figure.total }}
+				</div>
+				<div class="column col-6">
+					<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
+				</div>
+				<div class="column col-6">
+					<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
+				</div>
+				<div class="column col-6">
+					<BarChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
+				</div>
+				<div class="column col-6">
+					<BarChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -113,7 +127,7 @@ export default {
 			var din = this.$options.stats.mailsPerWeekday.in
 			var dout = this.$options.stats.mailsPerWeekday.out
 			var weekdays = [], dsin = [], dsout = []
-			var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+			var days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 			for (const weekday in din) {
 				weekdays.push(days[weekday])
 				dsin.push(din[weekday])
@@ -130,13 +144,26 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss">
+$primary-color: #30cef1;
+$error-color: #ed2f47;
+$body-font-color: #b9cace;
+$bg-color: #1b1e1f;
+$bg-color-dark: #222627;
+$bg-color-light: #1b1e1f;
+$border-color: #222627;
+$dark-color: #222627;
+$gray-color: #7e888a;
+
+@import "node_modules/spectre.css/src/spectre";
+// @import "node_modules/spectre.css/src/spectre-icons";
+// @import "node_modules/spectre.css/src/spectre-exp";
+
+</style>
 <style lang="stylus">
 #app
 	font-family 'Avenir', Helvetica, Arial, sans-serif
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
-	text-align center
-	color #2c3e50
-	margin 20px auto 0 auto
-	width 960px
 </style>

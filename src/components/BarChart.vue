@@ -42,10 +42,21 @@ export default {
 						xAxes: [{
 							barPercentage: 1,
 							categoryPercentage: .6,
-							stacked: false
+							stacked: false,
+							gridLines: {
+								display: false,
+							},
+							ticks: {
+								maxRotation: 0,
+								autoSkipPadding: 10
+							}
 						}],
 						yAxes: [{
-							stacked: false
+							display: false,
+							stacked: false,
+							gridLines: {
+								display: false,
+							}
 						}]
 					}
 				}
