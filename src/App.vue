@@ -35,11 +35,16 @@ import MAILS_PER_MONTH from './data/mails-per-month.json'
 import MAILS_PER_YEAR from './data/mails-per-year.json'
 import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
 
-// initialize Chart.js default options
+// initialize Chart.js with global configuration
 import Chart from 'chart.js'
 Chart.defaults.global.elements.arc.borderWidth = 0
 Chart.defaults.global.tooltips.mode = 'index'
 Chart.defaults.global.tooltips.intersect = false
+Chart.defaults.global.tooltips.multiKeyBackground = '#000'
+Chart.defaults.global.tooltips.titleMarginBottom = 10
+Chart.defaults.global.tooltips.xPadding = 10
+Chart.defaults.global.tooltips.yPadding = 10
+Chart.defaults.global.tooltips.cornerRadius = 2
 Chart.defaults.global.hover.mode = 'index'
 
 export default {
@@ -77,8 +82,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
+					{ label: 'Mails sent', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Mails received', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: years
 			}
@@ -87,9 +92,10 @@ export default {
 			var din = this.$options.stats.mailsPerMonth.in
 			var dout = this.$options.stats.mailsPerMonth.out
 			var months = [], dsin = [], dsout = []
+			var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			for (const year in din) {
 				for (const month in din[year]) {
-					months.push(year + '-' + month)
+					months.push(year + ' ' + labels[month-1])
 					dsin.push(din[year][month])
 					if(dout.hasOwnProperty(year) && dout[year].hasOwnProperty(month)) {
 						dsout.push(dout[year][month])
@@ -100,8 +106,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
+					{ label: 'Mails sent', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Mails received', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: months
 			}
@@ -117,8 +123,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
+					{ label: 'Mails sent', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Mails received', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: hours
 			}
@@ -135,8 +141,8 @@ export default {
 			}
 			return {
 				datasets: [
-					{ label: 'Outgoing', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
-					{ label: 'Incoming', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
+					{ label: 'Mails sent', data: dsout, color: 'rgb(237, 47, 71)', bcolor: 'rgb(237, 47, 71, .2)'  },
+					{ label: 'Mails received', data: dsin,  color: 'rgb(48, 206, 242)', bcolor: 'rgb(48, 206, 242, .2)' },
 				],
 				labels: weekdays
 			}
