@@ -1,6 +1,6 @@
 <template>
 <div>
-	<h3 class="text-center">{{ title }}</h3>
+	<h3>{{ title }}</h3>
 	<canvas :id='id'></canvas>
 </div>
 </template>
