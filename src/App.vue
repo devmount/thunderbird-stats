@@ -2,22 +2,39 @@
 	<div id="app">
 		<div class="container grid-lg">
 			<div class="columns">
-				<div class="column col-12">
-					in: {{ figure.in }}
-					out: {{ figure.out }}
-					total: {{ figure.total }}
+				<div class="column col-4">
+					<h1>Thunderbird Email Stats</h1>
+				</div>
+				<div class="column col-2">
+					<div class="text-gray">Total mails</div>
+					<div class="figure">{{ figure.total }}</div>
+					<div class="text-gray">within 5 years</div>
+				</div>
+				<div class="column col-2">
+					<div class="text-gray">Mails sent</div>
+					<div class="figure">{{ figure.in }}</div>
+					<div class="text-gray">{{ figure.inPercentage }}% of total</div>
+				</div>
+				<div class="column col-2">
+					<div class="text-gray">Mails received</div>
+					<div class="figure">{{ figure.out }}</div>
+					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
+				</div>
+			</div>
+			<div class="columns">
+				<div class="column col-6">
+					<LineChart title="Years" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
 				</div>
 				<div class="column col-6">
-					<LineChart title="Mails per Year" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
+					<LineChart title="Months" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
+				</div>
+			</div>
+			<div class="columns">
+				<div class="column col-6">
+					<BarChart title="Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
 				</div>
 				<div class="column col-6">
-					<LineChart title="Mails per Month" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
-				</div>
-				<div class="column col-6">
-					<BarChart title="Mails per Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
-				</div>
-				<div class="column col-6">
-					<BarChart title="Mails per Weekday" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
+					<BarChart title="Weekdays" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 				</div>
 			</div>
 		</div>
@@ -63,10 +80,13 @@ export default {
 		figure () {
 			var din = Object.values(this.$options.stats.mailsPerYear.in).reduce( (a, c) => a + c, 0 )
 			var dout = Object.values(this.$options.stats.mailsPerYear.out).reduce( (a, c) => a + c, 0 )
+			var total = din+dout
 			return {
-				in: din,
-				out: dout,
-				total: din + dout
+				in: din.toLocaleString(),
+				inPercentage: (din/total*100).toFixed(2),
+				out: dout.toLocaleString(),
+				outPercentage: (dout/total*100).toFixed(2),
+				total: total.toLocaleString()
 			}
 		},
 		mailsPerYear () {
@@ -163,13 +183,20 @@ $dark-color: #222627;
 $gray-color: #7e888a;
 
 @import "node_modules/spectre.css/src/spectre";
-// @import "node_modules/spectre.css/src/spectre-icons";
-// @import "node_modules/spectre.css/src/spectre-exp";
-
 </style>
 <style lang="stylus">
 #app
-	font-family 'Avenir', Helvetica, Arial, sans-serif
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
+
+.columns
+	margin-top 1rem
+
+h1, h2, h3
+	text-align center
+
+.figure
+	font-size: 2.5em;
+	line-height: 1em;
+	font-weight: 700;
 </style>
