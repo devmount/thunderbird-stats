@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 import os, sys, time, locale, json
+from datetime import date, datetime
 # pylint: disable=F0401
 from tqdm import tqdm
 
@@ -10,6 +11,7 @@ address = ['@devmount.de', 'andreasffo@web.de', 'hpdesigner@web.de', 'ghetto_son
 def stats():
 	""" read all mail files, collect and export data """
 	mailfiles = []
+	meta = { 'in': 0, 'out': 0, 'total': 0 }
 	mails_per_year = { 'in': {}, 'out': {} }
 	mails_per_month = { 'in': {}, 'out': {} }
 	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
@@ -55,6 +57,15 @@ def stats():
 							maildate = None
 			# save found data
 			if mailtype is not None and maildate is not None:
+				# build meta data
+				meta[mailtype] += 1
+				meta['total'] += 1
+				if 'oldest' not in meta:
+					meta['oldest'] = maildate
+				if 'newest' not in meta:
+					meta['newest'] = maildate
+				meta['oldest'] = maildate if maildate < meta['oldest'] else meta['oldest']
+				meta['newest'] = maildate if maildate >= meta['newest'] else meta['newest']
 				# build mails per year and per month
 				if maildate.tm_year in mails_per_year[mailtype]:
 					mails_per_year[mailtype][maildate.tm_year] += 1
@@ -82,8 +93,25 @@ def stats():
 		json.dump(mails_per_hour, f)
 	with open('./src/data/mails-per-weekday.json', 'w') as f:
 		json.dump(mails_per_weekday, f)
+	with open('./src/data/meta.json', 'w') as f:
+		meta['days'] = (time.mktime(meta['newest']) - time.mktime(meta['oldest']))/(60*60*24)
+		meta['weeks'] = meta['days']/7
+		meta['months'] = meta['days']/(365/12)
+		meta['years'] = meta['days']/365
+		meta['oldest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['oldest'])
+		meta['newest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['newest'])
+		meta['tstamp'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+		json.dump(meta, f, default=json_dates)
 
 	return True
+
+
+def json_dates(obj):
+	"""JSON serializer for date objects"""
+	if isinstance(obj, (datetime, date)):
+		return obj.isoformat()
+	raise TypeError ("Type %s not serializable" % type(obj))
+
 
 # output
 print('Processing mails...')
