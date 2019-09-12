@@ -2,43 +2,43 @@
 	<div id="app">
 		<div class="container grid-lg">
 			<div class="columns">
-				<div class="column col-4">
+				<div class="column col-4 col-md-12">
 					<h1>Thunderbird Email Stats</h1>
 				</div>
-				<div class="column col-2 text-center">
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Total mails</div>
 					<div class="figure">{{ figure.total }}</div>
 					<div class="text-gray">within {{ figure.years }} years</div>
 				</div>
-				<div class="column col-2 text-center">
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails received</div>
 					<div class="figure">{{ figure.in }}</div>
 					<div class="text-gray">{{ figure.inPercentage }}% of total</div>
 				</div>
-				<div class="column col-2 text-center">
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails sent</div>
 					<div class="figure">{{ figure.out }}</div>
 					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
 				</div>
-				<div class="column col-2 text-center">
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails per day</div>
 					<div class="figure">{{ figure.perday }}</div>
 					<div class="text-gray">{{ figure.perweek }} mails per week</div>
 				</div>
 			</div>
 			<div class="columns">
-				<div class="column col-6">
+				<div class="column col-6 col-sm-12">
 					<LineChart title="Years" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
 				</div>
-				<div class="column col-6">
+				<div class="column col-6 col-sm-12">
 					<LineChart title="Months" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
 				</div>
 			</div>
 			<div class="columns">
-				<div class="column col-6">
+				<div class="column col-6 col-sm-12">
 					<BarChart title="Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
 				</div>
-				<div class="column col-6">
+				<div class="column col-6 col-sm-12">
 					<BarChart title="Weekdays" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 				</div>
 			</div>
