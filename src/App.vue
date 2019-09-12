@@ -5,20 +5,25 @@
 				<div class="column col-4">
 					<h1>Thunderbird Email Stats</h1>
 				</div>
-				<div class="column col-2">
+				<div class="column col-2 text-center">
 					<div class="text-gray">Total mails</div>
 					<div class="figure">{{ figure.total }}</div>
-					<div class="text-gray">within 5 years</div>
+					<div class="text-gray">within {{ figure.years }} years</div>
 				</div>
-				<div class="column col-2">
-					<div class="text-gray">Mails sent</div>
+				<div class="column col-2 text-center">
+					<div class="text-gray">Mails received</div>
 					<div class="figure">{{ figure.in }}</div>
 					<div class="text-gray">{{ figure.inPercentage }}% of total</div>
 				</div>
-				<div class="column col-2">
-					<div class="text-gray">Mails received</div>
+				<div class="column col-2 text-center">
+					<div class="text-gray">Mails sent</div>
 					<div class="figure">{{ figure.out }}</div>
 					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
+				</div>
+				<div class="column col-2 text-center">
+					<div class="text-gray">Mails per day</div>
+					<div class="figure">{{ figure.perday }}</div>
+					<div class="text-gray">{{ figure.perweek }} mails per week</div>
 				</div>
 			</div>
 			<div class="columns">
@@ -37,6 +42,11 @@
 					<BarChart title="Weekdays" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 				</div>
 			</div>
+			<div class="columns">
+				<div class="column col-12 text-gray text-center text-sm">
+					This data was retrieved on {{ figure.tstamp }}
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -47,6 +57,7 @@ import LineChart from './components/LineChart.vue'
 import BarChart from './components/BarChart.vue'
 
 // chart data
+import META from './data/meta.json'
 import MAILS_PER_HOUR from './data/mails-per-hour.json'
 import MAILS_PER_MONTH from './data/mails-per-month.json'
 import MAILS_PER_YEAR from './data/mails-per-year.json'
@@ -71,6 +82,7 @@ export default {
 		BarChart,
 	},
 	stats: {
+		meta: META,
 		mailsPerHour: MAILS_PER_HOUR,
 		mailsPerMonth: MAILS_PER_MONTH,
 		mailsPerYear: MAILS_PER_YEAR,
@@ -78,15 +90,18 @@ export default {
 	},
 	computed: {
 		figure () {
-			var din = Object.values(this.$options.stats.mailsPerYear.in).reduce( (a, c) => a + c, 0 )
-			var dout = Object.values(this.$options.stats.mailsPerYear.out).reduce( (a, c) => a + c, 0 )
-			var total = din+dout
+			var meta = this.$options.stats.meta
+			var tstamp = new Date(meta.tstamp)
 			return {
-				in: din.toLocaleString(),
-				inPercentage: (din/total*100).toFixed(2),
-				out: dout.toLocaleString(),
-				outPercentage: (dout/total*100).toFixed(2),
-				total: total.toLocaleString()
+				in: meta.in.toLocaleString(),
+				inPercentage: (meta.in/meta.total*100).toFixed(2),
+				out: meta.out.toLocaleString(),
+				outPercentage: (meta.out/meta.total*100).toFixed(2),
+				total: meta.total.toLocaleString(),
+				years: meta.years.toFixed(1),
+				perday: (meta.total/meta.days.toFixed(1)).toFixed(2),
+				perweek: (meta.total/meta.weeks.toFixed(1)).toFixed(1),
+				tstamp: tstamp.toLocaleString(),
 			}
 		},
 		mailsPerYear () {
@@ -199,4 +214,7 @@ h1, h2, h3
 	font-size: 2.5em;
 	line-height: 1em;
 	font-weight: 700;
+
+.text-sm
+	font-size .8em
 </style>
