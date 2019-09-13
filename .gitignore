@@ -1,4 +1,5 @@
 .DS_Store
+.Thumbs
 node_modules
 /dist
 /src/data
