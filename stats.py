@@ -8,6 +8,7 @@ from tqdm import tqdm
 maildir = '/mnt/c/Users/Andreas/AppData/Roaming/Thunderbird/Profiles/z3mwnjgu.default/ImapMail/mail.ud14.udmedia.de'
 # own email address(es)
 address = ['@devmount.de', 'andreasffo@web.de', 'hpdesigner@web.de', 'ghetto_song@web.de', 'hpdesigner_20@mailbox.tu-berlin.de', 'andreas.mueller.4@campus.tu-berlin.de', 'devmountde@gmail.com', 'devmount@outlook.de', 'devmount@outlook.com', 'andreas@ap-intermedia.de']
+
 def stats():
 	""" read all mail files, collect and export data """
 	mailfiles = []
@@ -28,19 +29,27 @@ def stats():
 		mailtype = None
 		maildate = None
 		for line in open(f, 'r', encoding='latin1'):
-			# decide wether an email was sent or received
-			if line.startswith('From: '):
+			# determine wether an email was sent or received
+			if line.startswith('From:') or line.startswith('from:'):
 				mailtype = 'out' if any(a in line for a in address) else 'in'
+				continue
 			# get mail date
 			if line.startswith('Date:'):
 				startindex = line.index(',')+2 if ',' in line else line.index(' ')+1
 				datestring = line[startindex:].strip()
-				datestring = datestring[:datestring.rindex(" ")] if len(datestring.split(" "))>5 else datestring
+				datestring = datestring[:datestring.rindex("+")+5] if '+' in datestring else datestring
 				try:
 					maildate = time.strptime(datestring, '%d %b %Y %H:%M:%S %z')
 				except ValueError:
-					maildate = None
-			# if maildate was not found, try alternative approaches/formats
+					try:
+						datestring = datestring[:datestring.rindex(":")+3]
+						maildate = time.strptime(datestring, '%d %b %Y %H:%M:%S')
+					except ValueError:
+						try:
+							maildate = time.strptime(datestring, '%d %b %Y %H:%M')
+						except ValueError:
+							maildate = None
+			# if maildate was not found, try alternative approache/formats
 			if maildate is None and ' +0000' in line and len(line)>26:
 				datestring = line[line.index(' +0000')-20:line.index(' +0000')+6]
 				try:
@@ -80,9 +89,12 @@ def stats():
 				mails_per_weekday[mailtype][maildate.tm_wday] += 1
 				# stop and jump to next file
 				break
+		# for debugging purposes:
 		# else:
-		# 	if mailtype is None and maildate is None:
-		# 		print(open(f, 'r', encoding='latin1').read())
+		# 	if mailtype is None or maildate is None:
+		# 		fh = open('./src/data/debug.txt', 'a')
+		# 		fh.write(open(f, 'r', encoding='latin1').read())
+		# 		fh.close
 
 	# export data
 	with open('./src/data/mails-per-year.json', 'w') as f:
@@ -94,6 +106,7 @@ def stats():
 	with open('./src/data/mails-per-weekday.json', 'w') as f:
 		json.dump(mails_per_weekday, f)
 	with open('./src/data/meta.json', 'w') as f:
+		# build featured and meta data
 		meta['days'] = (time.mktime(meta['newest']) - time.mktime(meta['oldest']))/(60*60*24)
 		meta['weeks'] = meta['days']/7
 		meta['months'] = meta['days']/(365/12)
