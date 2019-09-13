@@ -4,7 +4,7 @@
 
 Generate simple but awesome analytics of your Thunderbird mail account
 
--screenshot-
+![thunderbird_email_stats](https://user-images.githubusercontent.com/5441654/64897594-426d5780-d684-11e9-915a-8cd0551013b1.jpg)
 
 ## Get started
 
