@@ -2,9 +2,11 @@
 	<div id="app">
 		<div class="container grid-lg">
 			<div class="columns">
+				<!-- title -->
 				<div class="column col-4 col-md-12">
 					<h1>Thunderbird Email Stats</h1>
 				</div>
+				<!-- featured figures -->
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Total mails</div>
 					<div class="figure">{{ figure.total }}</div>
@@ -26,6 +28,7 @@
 					<div class="text-gray">{{ figure.perweek }} mails per week</div>
 				</div>
 			</div>
+			<!-- line charts for mail amount per year and month -->
 			<div class="columns">
 				<div class="column col-6 col-sm-12">
 					<LineChart title="Years" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
@@ -34,6 +37,7 @@
 					<LineChart title="Months" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
 				</div>
 			</div>
+			<!-- bar charts for mail distribution over daytime and weekday -->
 			<div class="columns">
 				<div class="column col-6 col-sm-12">
 					<BarChart title="Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
@@ -42,9 +46,13 @@
 					<BarChart title="Weekdays" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
 				</div>
 			</div>
+			<!-- footer -->
 			<div class="columns">
 				<div class="column col-12 text-gray text-center text-sm">
-					This data was retrieved on {{ figure.tstamp }}
+					<p>
+						This data was retrieved on {{ figure.tstamp }}<br />
+						Star and fork this project on <a href="https://github.com/devmount/thunderbird-stats">Github</a>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -101,16 +109,16 @@ export default {
 				years: meta.years.toFixed(1),
 				perday: (meta.total/meta.days.toFixed(1)).toFixed(2),
 				perweek: (meta.total/meta.weeks.toFixed(1)).toFixed(1),
+				oldest: new Date(meta.oldest),
+				newest: new Date(meta.newest),
 				tstamp: tstamp.toLocaleString(),
 			}
 		},
 		mailsPerYear () {
 			var din = this.$options.stats.mailsPerYear.in
 			var dout = this.$options.stats.mailsPerYear.out
-			var keys = [...Object.keys(this.$options.stats.mailsPerYear.in),...Object.keys(this.$options.stats.mailsPerYear.out)]
-			var min = Math.min(...keys), max = Math.max(...keys)
 			var years = [], dsin = [], dsout = []
-			for (let y = min; y <= max; ++y) {
+			for (let y = this.figure.oldest.getFullYear(); y <= this.figure.newest.getFullYear(); ++y) {
 				years.push(y)
 				dsin.push(din.hasOwnProperty(y) ? din[y] : 0)
 				dsout.push(dout.hasOwnProperty(y) ? dout[y] : 0)

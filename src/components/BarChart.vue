@@ -29,6 +29,7 @@ export default {
 					backgroundColor: dataset.bcolor,
 					borderWidth: 2,
 					borderColor: dataset.color,
+					borderSkipped: false
 				})
 			}
 			new Chart(this.id, {
