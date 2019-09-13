@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
-import os, sys, time, locale, json
-from datetime import date, datetime
+import os, sys, time, json
+from datetime import datetime
 # pylint: disable=F0401
 from tqdm import tqdm
 
@@ -114,14 +114,14 @@ def stats():
 		meta['oldest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['oldest'])
 		meta['newest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['newest'])
 		meta['tstamp'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-		json.dump(meta, f, default=json_dates)
+		json.dump(meta, f, default=json_datetime)
 
 	return True
 
 
-def json_dates(obj):
-	"""JSON serializer for date objects"""
-	if isinstance(obj, (datetime, date)):
+def json_datetime(obj):
+	"""JSON serializer for datetime objects"""
+	if isinstance(obj, (datetime)):
 		return obj.isoformat()
 	raise TypeError ("Type %s not serializable" % type(obj))
 
