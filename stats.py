@@ -1,13 +1,17 @@
 #!/usr/bin/python3.6
 import os, sys, time, json
+from configparser import ConfigParser
 from datetime import datetime
 # pylint: disable=F0401
 from tqdm import tqdm
 
+# get config
+cfg = ConfigParser()
+cfg.read('config.ini')
 # root directory of the maildir account directory of thunderbird
-maildir = '/mnt/c/Users/Andreas/AppData/Roaming/Thunderbird/Profiles/z3mwnjgu.default/ImapMail/mail.ud14.udmedia.de'
+maildir = cfg.get('email', 'ThunderbirdProfilePath')
 # own email address(es)
-address = ['@devmount.de', 'andreasffo@web.de', 'hpdesigner@web.de', 'ghetto_song@web.de', 'hpdesigner_20@mailbox.tu-berlin.de', 'andreas.mueller.4@campus.tu-berlin.de', 'devmountde@gmail.com', 'devmount@outlook.de', 'devmount@outlook.com', 'andreas@ap-intermedia.de']
+address = cfg.get('email', 'EmailAddresses').split(',')
 
 def stats():
 	""" read all mail files, collect and export data """
