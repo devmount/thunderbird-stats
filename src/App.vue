@@ -31,19 +31,39 @@
 			<!-- line charts for mail amount per year and month -->
 			<div class="columns">
 				<div class="column col-6 col-sm-12">
-					<LineChart title="Years" :datasets="mailsPerYear.datasets" :labels="mailsPerYear.labels" />
+					<LineChart
+						title="Years"
+						description="Total number of emails per year"
+						:datasets="mailsPerYear.datasets"
+						:labels="mailsPerYear.labels"
+					/>
 				</div>
 				<div class="column col-6 col-sm-12">
-					<LineChart title="Months" :datasets="mailsPerMonth.datasets" :labels="mailsPerMonth.labels" />
+					<LineChart
+						title="Months"
+						description="Total number of emails per month"
+						:datasets="mailsPerMonth.datasets"
+						:labels="mailsPerMonth.labels"
+					/>
 				</div>
 			</div>
 			<!-- bar charts for mail distribution over daytime and weekday -->
 			<div class="columns">
 				<div class="column col-6 col-sm-12">
-					<BarChart title="Daytime" :datasets="mailsPerHour.datasets" :labels="mailsPerHour.labels" />
+					<BarChart
+						title="Daytime"
+						description="Number of emails per time of day"
+						:datasets="mailsPerHour.datasets"
+						:labels="mailsPerHour.labels"
+					/>
 				</div>
 				<div class="column col-6 col-sm-12">
-					<BarChart title="Weekdays" :datasets="mailsPerWeekday.datasets" :labels="mailsPerWeekday.labels" />
+					<BarChart
+						title="Weekdays"
+						description="Number of emails per day of week"
+						:datasets="mailsPerWeekday.datasets"
+						:labels="mailsPerWeekday.labels"
+					/>
 				</div>
 			</div>
 			<!-- footer -->
@@ -226,4 +246,10 @@ h1, h2, h3
 
 .text-sm
 	font-size .8em
+
+.chart
+	h3
+		margin-bottom .25em
+	p
+		margin 0
 </style>
