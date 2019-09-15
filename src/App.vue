@@ -13,13 +13,13 @@
 					<div class="text-gray">within {{ figure.years }} years</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Mails received</div>
-					<div class="figure">{{ figure.in }}</div>
+					<div class="text-primary">Mails received</div>
+					<div class="figure text-primary">{{ figure.in }}</div>
 					<div class="text-gray">{{ figure.inPercentage }}% of total</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Mails sent</div>
-					<div class="figure">{{ figure.out }}</div>
+					<div class="text-secondary">Mails sent</div>
+					<div class="figure text-secondary">{{ figure.out }}</div>
 					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
@@ -74,6 +74,7 @@ import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
 // initialize Chart.js with global configuration
 import Chart from 'chart.js'
 Chart.defaults.global.elements.arc.borderWidth = 0
+Chart.defaults.global.legend.display = false
 Chart.defaults.global.tooltips.mode = 'index'
 Chart.defaults.global.tooltips.intersect = false
 Chart.defaults.global.tooltips.multiKeyBackground = '#000'
@@ -196,7 +197,7 @@ export default {
 
 <style lang="scss">
 $primary-color: #30cef1;
-$error-color: #ed2f47;
+$secondary-color: #ed2f47;
 $body-font-color: #b9cace;
 $bg-color: #1b1e1f;
 $bg-color-dark: #222627;
