@@ -76,6 +76,11 @@ yarn serve
 yarn build
 ```
 
+## Additional notes
+
+- Keep in mind, that the processing of large mailboxes can take a lot of time.
+- Unfortunately there is no unified email date format, so it's very likely that the Python script will not recognize all of your emails
+
 ## Licence
 
 [MIT License](./LICENSE)
