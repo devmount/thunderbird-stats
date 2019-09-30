@@ -93,6 +93,7 @@ import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
 
 // initialize Chart.js with global configuration
 import Chart from 'chart.js'
+Chart.defaults.global.defaultFontColor = "#7e8d97"
 Chart.defaults.global.elements.arc.borderWidth = 0
 Chart.defaults.global.legend.display = false
 Chart.defaults.global.tooltips.mode = 'index'
@@ -219,13 +220,13 @@ export default {
 <style lang="scss">
 $primary-color: #30cef1;
 $secondary-color: #ed2f47;
-$body-font-color: #b9cace;
-$bg-color: #1b1e1f;
+$body-font-color: #cedae2;
+$bg-color: #0d1219;
 $bg-color-dark: #222627;
-$bg-color-light: #1b1e1f;
+$bg-color-light: #0d1219;
 $border-color: #222627;
 $dark-color: #222627;
-$gray-color: #7e888a;
+$gray-color: #7e8d97;
 
 @import "node_modules/spectre.css/src/spectre";
 </style>
