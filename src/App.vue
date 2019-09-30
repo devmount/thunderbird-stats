@@ -4,7 +4,7 @@
 			<div class="columns">
 				<!-- title -->
 				<div class="column col-4 col-md-12">
-					<h1>Thunderbird Email Stats</h1>
+					<h1>Thunderbird<br />Email Stats</h1>
 				</div>
 				<!-- featured figures -->
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
@@ -239,11 +239,12 @@ $gray-color: #7e888a;
 
 h1, h2, h3
 	text-align center
+	font-weight 100
 
 .figure
-	font-size: 2.5em;
+	font-size: 2.75em;
 	line-height: 1em;
-	font-weight: 700;
+	font-weight: 500;
 
 .text-sm
 	font-size .8em
