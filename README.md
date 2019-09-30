@@ -2,7 +2,6 @@
 
 [![release](https://img.shields.io/badge/release-v0.1.2-30cef2.svg?style=flat-square)](https://github.com/devmount/thunderbird-stats/releases) [![license](https://img.shields.io/badge/license-MIT-30cef2.svg?style=flat-square)](./LICENSE) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-30cef2.svg?style=flat-square)](./CONTRIBUTING.md)
 
-
 Generate simple but awesome analytics of your Thunderbird mail account
 
 ![thunderbird_email_stats](https://user-images.githubusercontent.com/5441654/64927404-d1a47780-d80a-11e9-899e-c4b55f8e2bbe.jpg)
@@ -61,7 +60,7 @@ Now that everything is set, you can run the Python script. A progress indicator 
 ```bash
 $ ./stats.py
 Processing mails...
-100%|██████████████████████████████| 24654/24654 [00:27<00:00, 907.48mails/s]
+100%|██████████████████████████████████| 24790/24790 [00:14<00:00, 1746.85mails/s]
 Finished.
 ```
 
@@ -80,7 +79,7 @@ yarn build
 ## Additional notes
 
 - Keep in mind, that the processing of large mailboxes can take a lot of time.
-- Unfortunately there is no unified email date format, so it's very likely that the Python script will not recognize all of your emails
+- Unfortunately there is no unified email date format, so it's very likely that the Python script will not recognize all of your emails. If you encounter an unsupported date format, please [issue a bug report](https://github.com/devmount/thunderbird-stats/issues/new?template=bug_report.md).
 
 ## Licence
 
