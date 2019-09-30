@@ -157,10 +157,16 @@ export default {
 		mailsPerMonth () {
 			var din = this.$options.stats.mailsPerMonth.in
 			var dout = this.$options.stats.mailsPerMonth.out
-			var months = [], dsin = [], dsout = []
+			var months = [], dsin = [], dsout = [], skip = true
 			var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			for (const year in din) {
 				for (const month in din[year]) {
+					// trim leading zero months
+					if (din[year][month] == 0) {
+						if (skip) continue
+					} else {
+						skip = false
+					}
 					months.push(year + ' ' + labels[month-1])
 					dsin.push(din[year][month])
 					if(dout.hasOwnProperty(year) && dout[year].hasOwnProperty(month)) {
