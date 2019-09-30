@@ -101,6 +101,8 @@ def stats():
 		# 		fh.close
 
 	# export data
+	if not os.path.exists('./src/data/'):
+		os.makedirs('./src/data/')
 	with open('./src/data/mails-per-year.json', 'w') as f:
 		json.dump(mails_per_year, f)
 	with open('./src/data/mails-per-month.json', 'w') as f:
