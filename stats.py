@@ -21,6 +21,7 @@ def stats():
 	mails_per_month = { 'in': {}, 'out': {} }
 	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
 	mails_per_weekday = { 'in': { i:0 for i in range(7) }, 'out': { i:0 for i in range(7) } }
+	mails_per_weekday_per_hour = { 'in': { i:[0]*24 for i in range(7) }, 'out': { i:[0]*24 for i in range(7) } }
 	# get all mail files
 	for root,_,files in os.walk(maildir):
 		for f in files:
@@ -87,10 +88,12 @@ def stats():
 					mails_per_year[mailtype][maildate.tm_year] = 1
 					mails_per_month[mailtype][maildate.tm_year] = { i:0 for i in range(1,13) }
 					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] = 1
-				# build average mails per hour
+				# build number of mails per hour
 				mails_per_hour[mailtype][maildate.tm_hour] += 1
-				# build average mails per weekday
+				# build number of mails per weekday
 				mails_per_weekday[mailtype][maildate.tm_wday] += 1
+				# build number of mails per weekday per hour
+				mails_per_weekday_per_hour[mailtype][maildate.tm_wday][maildate.tm_hour] += 1
 				# stop and jump to next file
 				break
 		# for debugging purposes:
@@ -111,6 +114,8 @@ def stats():
 		json.dump(mails_per_hour, f)
 	with open('./src/data/mails-per-weekday.json', 'w') as f:
 		json.dump(mails_per_weekday, f)
+	with open('./src/data/mails-per-weekday-per-hour.json', 'w') as f:
+		json.dump(mails_per_weekday_per_hour, f)
 	with open('./src/data/meta.json', 'w') as f:
 		# build featured and meta data
 		meta['days'] = (time.mktime(meta['newest']) - time.mktime(meta['oldest']))/(60*60*24)

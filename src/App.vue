@@ -66,6 +66,21 @@
 					/>
 				</div>
 			</div>
+			<!-- heat map for mail distribution over daytime on weekday -->
+			<div class="columns">
+				<div class="column col-3 col-sm-12 heatmap">
+					<div v-for="r in 24" :key="r" class="row">
+						<div class="legend text-gray"><span v-if="r%2==1">{{r-1}}</span></div>
+						<div v-for="c in 7" :key="c" class="cell" :style="'background: rgb(' + $options.stats.mailsPerWeekdayPerHour.in[c-1][r-1] + ',0,0)'"></div>
+					</div>
+				</div>
+				<div class="column col-3 col-sm-12 heatmap">
+					<div v-for="r in 24" :key="r" class="row">
+						<div class="legend text-gray"><span v-if="r%2==1">{{r-1}}</span></div>
+						<div v-for="c in 7" :key="c" class="cell" :style="'background: rgb(0,0,' + $options.stats.mailsPerWeekdayPerHour.out[c-1][r-1] + ')'"></div>
+					</div>
+				</div>
+			</div>
 			<!-- footer -->
 			<div class="columns">
 				<div class="column col-12 text-gray text-center text-sm">
@@ -90,6 +105,7 @@ import MAILS_PER_HOUR from './data/mails-per-hour.json'
 import MAILS_PER_MONTH from './data/mails-per-month.json'
 import MAILS_PER_YEAR from './data/mails-per-year.json'
 import MAILS_PER_WEEKDAY from './data/mails-per-weekday.json'
+import MAILS_PER_WEEKDAY_PER_HOUR from './data/mails-per-weekday-per-hour.json'
 
 // initialize Chart.js with global configuration
 import Chart from 'chart.js'
@@ -118,6 +134,7 @@ export default {
 		mailsPerMonth: MAILS_PER_MONTH,
 		mailsPerYear: MAILS_PER_YEAR,
 		mailsPerWeekday: MAILS_PER_WEEKDAY,
+		mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR,
 	},
 	computed: {
 		figure () {
@@ -219,6 +236,10 @@ export default {
 				labels: weekdays
 			}
 		},
+		mailsPerWeekdayPerHour () {
+			var din = this.$options.stats.mailsPerWeekdayPerHour.in
+			var dout = this.$options.stats.mailsPerWeekdayPerHour.out
+		}
 	},
 }
 </script>
@@ -261,4 +282,14 @@ h1, h2, h3
 		margin-bottom .25em
 	p
 		margin 0
+
+.heatmap
+	.row
+		display flex
+		.cell, .legend
+			height 10px
+			width calc(100%/8)
+		.legend
+			text-align center
+			font-size .5em
 </style>
