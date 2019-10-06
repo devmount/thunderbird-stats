@@ -68,16 +68,24 @@
 			</div>
 			<!-- heat map for mail distribution over daytime on weekday -->
 			<div class="columns">
-				<div class="column col-3 col-sm-12 heatmap">
-					<div v-for="r in 24" :key="r" class="row">
-						<div class="legend text-gray"><span v-if="r%2==1">{{r-1}}</span></div>
-						<div v-for="c in 7" :key="c" class="cell" :style="'background: rgb(' + $options.stats.mailsPerWeekdayPerHour.in[c-1][r-1] + ',0,0)'"></div>
+				<div class="column col-6 col-sm-12 heatmap">
+					<div v-for="r in 7" :key="r" class="row">
+						<div class="legend mr-1 text-gray text-xs text-mono">{{ weekdays[r-1] }}</div>
+						<div v-for="c in 24" :key="c" class="cell" :style="'background: #30cef1; opacity: ' + $options.stats.mailsPerWeekdayPerHour.in[r-1][c-1]/mailsPerWeekdayPerHourMax"></div>
+					</div>
+					<div class="row">
+						<div class="legend mr-1 text-gray text-xs text-mono"></div>
+						<div v-for="c in 24" :key="c"  class="legend mt-1 text-gray text-sm text-center"><span v-if="c%2==1">{{c-1}}</span></div>
 					</div>
 				</div>
-				<div class="column col-3 col-sm-12 heatmap">
-					<div v-for="r in 24" :key="r" class="row">
-						<div class="legend text-gray"><span v-if="r%2==1">{{r-1}}</span></div>
-						<div v-for="c in 7" :key="c" class="cell" :style="'background: rgb(0,0,' + $options.stats.mailsPerWeekdayPerHour.out[c-1][r-1] + ')'"></div>
+				<div class="column col-6 col-sm-12 heatmap">
+					<div v-for="r in 7" :key="r" class="row">
+						<div class="legend mr-1 text-gray text-xs text-mono">{{ weekdays[r-1] }}</div>
+						<div v-for="c in 24" :key="c" class="cell" :style="'background: #ed2f47; opacity: ' + $options.stats.mailsPerWeekdayPerHour.out[r-1][c-1]/mailsPerWeekdayPerHourMax"></div>
+					</div>
+					<div class="row">
+						<div class="legend mr-1 text-gray text-xs text-mono"></div>
+						<div v-for="c in 24" :key="c"  class="legend mt-1 text-gray text-sm text-center"><span v-if="c%2==1">{{c-1}}</span></div>
 					</div>
 				</div>
 			</div>
@@ -236,15 +244,29 @@ export default {
 				labels: weekdays
 			}
 		},
-		mailsPerWeekdayPerHour () {
+		mailsPerWeekdayPerHourMax () {
+			let max = 0
 			var din = this.$options.stats.mailsPerWeekdayPerHour.in
+			for (let d in din) {
+				let m = Math.max(...din[d])
+				max = m > max ? m : max
+			}
 			var dout = this.$options.stats.mailsPerWeekdayPerHour.out
+			for (let d in dout) {
+				let m = Math.max(...dout[d])
+				max = m > max ? m : max
+			}
+			return max
+		},
+		weekdays () {
+			return ['Mo','Tu','We','Th','Fr','Sa','Su']
 		}
 	},
 }
 </script>
 
 <style lang="scss">
+// spectre config
 $primary-color: #30cef1;
 $secondary-color: #ed2f47;
 $body-font-color: #cedae2;
@@ -254,10 +276,15 @@ $bg-color-light: #0d1219;
 $border-color: #222627;
 $dark-color: #222627;
 $gray-color: #7e8d97;
-
 @import "node_modules/spectre.css/src/spectre";
+
+// import fonts
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono');
 </style>
+
 <style lang="stylus">
+font-mono = 'Fira Mono', 'Courier New', Courier, monospace
+
 #app
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
@@ -275,7 +302,16 @@ h1, h2, h3
 	font-weight: 500;
 
 .text-sm
-	font-size .8em
+	font-size .75em
+.text-xs
+	font-size .7em
+.text-mono
+	font-family font-mono
+
+.mt-1
+	margin-top .5em
+.mr-1
+	margin-right .5em
 
 .chart
 	h3
@@ -287,9 +323,6 @@ h1, h2, h3
 	.row
 		display flex
 		.cell, .legend
-			height 10px
+			height 20px
 			width calc(100%/8)
-		.legend
-			text-align center
-			font-size .5em
 </style>
