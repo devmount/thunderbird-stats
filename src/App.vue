@@ -128,7 +128,7 @@ Chart.defaults.global.hover.mode = 'index'
 
 export default {
 	name: 'app',
-	version: '0.1.2',
+	version: '0.1.3',
 	components: {
 		LineChart,
 		BarChart,
