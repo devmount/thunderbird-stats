@@ -69,24 +69,20 @@
 			<!-- heat map for mail distribution over daytime on weekday -->
 			<div class="columns">
 				<div class="column col-6 col-sm-12 heatmap">
-					<div v-for="r in 7" :key="r" class="row">
-						<div class="legend mr-1 text-gray text-xs text-mono">{{ weekdays[r-1] }}</div>
-						<div v-for="c in 24" :key="c" class="cell" :style="'background: #30cef1; opacity: ' + $options.stats.mailsPerWeekdayPerHour.in[r-1][c-1]/mailsPerWeekdayPerHourMax"></div>
-					</div>
-					<div class="row">
-						<div class="legend mr-1 text-gray text-xs text-mono"></div>
-						<div v-for="c in 24" :key="c"  class="legend mt-1 text-gray text-sm text-center"><span v-if="c%2==1">{{c-1}}</span></div>
-					</div>
+					<HeatMap
+						title="Daytime Incoming"
+						description="Number of incoming emails per weekday per hour"
+						rgb="48, 206, 241"
+						:dataset="$options.stats.mailsPerWeekdayPerHour.in"
+					/>
 				</div>
 				<div class="column col-6 col-sm-12 heatmap">
-					<div v-for="r in 7" :key="r" class="row">
-						<div class="legend mr-1 text-gray text-xs text-mono">{{ weekdays[r-1] }}</div>
-						<div v-for="c in 24" :key="c" class="cell" :style="'background: #ed2f47; opacity: ' + $options.stats.mailsPerWeekdayPerHour.out[r-1][c-1]/mailsPerWeekdayPerHourMax"></div>
-					</div>
-					<div class="row">
-						<div class="legend mr-1 text-gray text-xs text-mono"></div>
-						<div v-for="c in 24" :key="c"  class="legend mt-1 text-gray text-sm text-center"><span v-if="c%2==1">{{c-1}}</span></div>
-					</div>
+					<HeatMap
+						title="Daytime Outgoing"
+						description="Number of outgoing emails per weekday per hour"
+						rgb="237, 47, 71"
+						:dataset="$options.stats.mailsPerWeekdayPerHour.out"
+					/>
 				</div>
 			</div>
 			<!-- footer -->
@@ -106,6 +102,7 @@
 // internal components
 import LineChart from './components/LineChart.vue'
 import BarChart from './components/BarChart.vue'
+import HeatMap from './components/HeatMap.vue'
 
 // chart data
 import META from './data/meta.json'
@@ -135,6 +132,7 @@ export default {
 	components: {
 		LineChart,
 		BarChart,
+		HeatMap,
 	},
 	stats: {
 		meta: META,
@@ -244,23 +242,6 @@ export default {
 				labels: weekdays
 			}
 		},
-		mailsPerWeekdayPerHourMax () {
-			let max = 0
-			var din = this.$options.stats.mailsPerWeekdayPerHour.in
-			for (let d in din) {
-				let m = Math.max(...din[d])
-				max = m > max ? m : max
-			}
-			var dout = this.$options.stats.mailsPerWeekdayPerHour.out
-			for (let d in dout) {
-				let m = Math.max(...dout[d])
-				max = m > max ? m : max
-			}
-			return max
-		},
-		weekdays () {
-			return ['Mo','Tu','We','Th','Fr','Sa','Su']
-		}
 	},
 }
 </script>
@@ -297,9 +278,9 @@ h1, h2, h3
 	font-weight 100
 
 .figure
-	font-size: 2.75em;
-	line-height: 1em;
-	font-weight: 500;
+	font-size 2.75em;
+	line-height 1em;
+	font-weight 500;
 
 .text-sm
 	font-size .75em
@@ -310,6 +291,10 @@ h1, h2, h3
 
 .mt-1
 	margin-top .5em
+.mb-1
+	margin-bottom .5em
+.mb-2
+	margin-bottom 1em
 .mr-1
 	margin-right .5em
 
@@ -319,10 +304,8 @@ h1, h2, h3
 	p
 		margin 0
 
-.heatmap
-	.row
-		display flex
-		.cell, .legend
-			height 20px
-			width calc(100%/8)
+.tooltip
+	position relative
+	&::after
+		background rgba(0, 0, 0, .8)
 </style>
