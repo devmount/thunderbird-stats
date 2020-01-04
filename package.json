@@ -50,12 +50,12 @@
     "> 1%",
     "last 2 versions"
   ],
-	"vue": {
-		"publicPath": ""
-	},
-	"babel": {
-		"presets": [
-			"@vue/app"
-		]
-	}
+  "vue": {
+    "publicPath": ""
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  }
 }
