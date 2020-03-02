@@ -1,10 +1,10 @@
 # Thunderbird Email Stats
 
-[![release](https://img.shields.io/badge/release-v0.1.2-30cef2.svg?style=flat-square)](https://github.com/devmount/thunderbird-stats/releases) [![license](https://img.shields.io/badge/license-MIT-30cef2.svg?style=flat-square)](./LICENSE) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-30cef2.svg?style=flat-square)](./CONTRIBUTING.md)
+[![release](https://img.shields.io/badge/release-v0.1.3-30cef2.svg?style=flat-square)](https://github.com/devmount/thunderbird-stats/releases) [![license](https://img.shields.io/badge/license-MIT-30cef2.svg?style=flat-square)](./LICENSE) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-30cef2.svg?style=flat-square)](./CONTRIBUTING.md)
 
-Generate simple but awesome analytics of your Thunderbird mail account
+Generate simple but beautiful analytics of your Thunderbird email account
 
-![thunderbird_email_stats_screenshot](https://user-images.githubusercontent.com/5441654/66260418-9cae9380-e7be-11e9-93c2-42748f18cb33.png)
+![Thunderbird Email Stats v0.1.3 Screenshot](https://user-images.githubusercontent.com/5441654/75724079-e18f1580-5cdd-11ea-8dcf-c8e794d553a4.png)
 
 ## Get started
 
@@ -87,4 +87,4 @@ yarn build
 
 ---
 
-This tool is completely free to use. If you enjoy it, please consider [donating via Paypal](https://paypal.me/devmount) for further development. :green_heart:
+This tool is completely free to use. If you enjoy it, please consider [donating via Paypal](https://paypal.me/devmount) or [sponsoring me](https://github.com/sponsors/devmount) for further development. :green_heart:
