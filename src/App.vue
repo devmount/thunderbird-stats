@@ -10,14 +10,15 @@
 			<div class="columns">
 				<!-- featured figures -->
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Total mails</div>
+					<div class="text-gray">Mails total</div>
 					<div class="figure">{{ figure.total }}</div>
 					<div class="text-gray">within {{ figure.years }} years</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Unread mails</div>
+					<div class="text-gray">Mails unread</div>
 					<div class="figure">{{ figure.unread }}</div>
-					<div class="text-gray">{{ figure.unreadPercentage }}% of total</div>
+					<div class="text-gray" v-if="figure.unread > 0">{{ figure.unreadPercentage }}% of total</div>
+					<div class="text-gray" v-else>Nice work!</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-primary">Mails received</div>
