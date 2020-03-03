@@ -31,7 +31,9 @@ export default {
 					backgroundColor: dataset.bcolor,
 					borderWidth: 2,
 					borderColor: dataset.color,
-					borderSkipped: false
+					borderSkipped: false,
+					barPercentage: 1,
+					categoryPercentage: .6,
 				})
 			}
 			new Chart(this.id, {
@@ -43,8 +45,6 @@ export default {
 				options: {
 					scales: {
 						xAxes: [{
-							barPercentage: 1,
-							categoryPercentage: .6,
 							stacked: false,
 							gridLines: {
 								display: false,
