@@ -3,15 +3,12 @@
 		<div class="container grid-lg">
 			<div class="columns">
 				<!-- title -->
-				<div class="column col-4 col-md-12">
-					<h1>Thunderbird<br />Email Stats</h1>
+				<div class="column col-6 col-md-12">
+					<h1 class="text-left">Thunderbird Email Stats</h1>
 				</div>
+			</div>
+			<div class="columns">
 				<!-- featured figures -->
-				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Total mails</div>
-					<div class="figure">{{ figure.total }}</div>
-					<div class="text-gray">within {{ figure.years }} years</div>
-				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-primary">Mails received</div>
 					<div class="figure text-primary">{{ figure.in }}</div>
@@ -23,9 +20,21 @@
 					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
+				</div>
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
+					<div class="text-gray">Total mails</div>
+					<div class="figure">{{ figure.total }}</div>
+					<div class="text-gray">within {{ figure.years }} years</div>
+				</div>
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
+					<div class="text-gray">Mails per month</div>
+					<div class="figure">{{ figure.permonth }}</div>
+					<div class="text-gray">{{ figure.peryear }} mails/year</div>
+				</div>
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails per day</div>
 					<div class="figure">{{ figure.perday }}</div>
-					<div class="text-gray">{{ figure.perweek }} mails per week</div>
+					<div class="text-gray">{{ figure.perweek }} mails/week</div>
 				</div>
 			</div>
 			<!-- line charts for mail amount per year and month -->
@@ -155,6 +164,8 @@ export default {
 				years: meta.years.toFixed(1),
 				perday: (meta.total/meta.days.toFixed(1)).toFixed(2),
 				perweek: (meta.total/meta.weeks.toFixed(1)).toFixed(1),
+				permonth: (meta.total/meta.months.toFixed(1)).toFixed(1),
+				peryear: (meta.total/meta.years.toFixed(1)).toFixed(1),
 				oldest: new Date(meta.oldest),
 				newest: new Date(meta.newest),
 				tstamp: tstamp.toLocaleString(),
