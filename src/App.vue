@@ -10,6 +10,16 @@
 			<div class="columns">
 				<!-- featured figures -->
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
+					<div class="text-gray">Total mails</div>
+					<div class="figure">{{ figure.total }}</div>
+					<div class="text-gray">within {{ figure.years }} years</div>
+				</div>
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
+					<div class="text-gray">Unread mails</div>
+					<div class="figure">{{ figure.unread }}</div>
+					<div class="text-gray">{{ figure.unreadPercentage }}% of total</div>
+				</div>
+				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-primary">Mails received</div>
 					<div class="figure text-primary">{{ figure.in }}</div>
 					<div class="text-gray">{{ figure.inPercentage }}% of total</div>
@@ -18,13 +28,6 @@
 					<div class="text-secondary">Mails sent</div>
 					<div class="figure text-secondary">{{ figure.out }}</div>
 					<div class="text-gray">{{ figure.outPercentage }}% of total</div>
-				</div>
-				<div class="column col-2 col-md-3 col-sm-6 text-center">
-				</div>
-				<div class="column col-2 col-md-3 col-sm-6 text-center">
-					<div class="text-gray">Total mails</div>
-					<div class="figure">{{ figure.total }}</div>
-					<div class="text-gray">within {{ figure.years }} years</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails per month</div>
@@ -161,6 +164,8 @@ export default {
 				out: meta.out.toLocaleString(),
 				outPercentage: (meta.out/meta.total*100).toFixed(2),
 				total: meta.total.toLocaleString(),
+				unread: meta.unread.toLocaleString(),
+				unreadPercentage: (meta.unread/meta.total*100).toFixed(2),
 				years: meta.years.toFixed(1),
 				perday: (meta.total/meta.days.toFixed(1)).toFixed(2),
 				perweek: (meta.total/meta.weeks.toFixed(1)).toFixed(1),

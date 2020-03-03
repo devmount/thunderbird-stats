@@ -16,7 +16,7 @@ address = cfg.get('email', 'EmailAddresses').split(',')
 def stats():
 	""" read all mail files, collect and export data """
 	mailfiles = []
-	meta = { 'in': 0, 'out': 0, 'total': 0 }
+	meta = { 'in': 0, 'out': 0, 'total': 0, 'unread': 0 }
 	mails_per_year = { 'in': {}, 'out': {} }
 	mails_per_month = { 'in': {}, 'out': {} }
 	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
@@ -26,8 +26,17 @@ def stats():
 	for root,_,files in os.walk(maildir):
 		for f in files:
 			_,file_extension = os.path.splitext(f)
+			# get single mail files
 			if file_extension == '.eml':
 				mailfiles.append(os.path.join(root, f))
+			# get directory information: unread mails count
+			if file_extension == '.msf':
+				for line in reversed(list(open(os.path.join(root, f), 'r', encoding='latin1'))):
+					if line.startswith('[1:^9F(^A2='):
+						start = line.find('A2=')+3
+						end = line.find(')]', start)
+						meta['unread'] += int(line[start:end], 16)
+						break
 
 	# process all mail files to get data
 	for f in tqdm(mailfiles, unit='mails', mininterval=0.05):
