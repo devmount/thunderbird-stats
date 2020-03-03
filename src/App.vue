@@ -1,13 +1,13 @@
 <template>
 	<div id="app">
 		<div class="container grid-lg">
-			<div class="columns">
+			<div class="columns mt-1-5">
 				<!-- title -->
 				<div class="column col-6 col-md-12">
 					<h1 class="text-left">Thunderbird Email Stats</h1>
 				</div>
 			</div>
-			<div class="columns">
+			<div class="columns mt-1">
 				<!-- featured figures -->
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails total</div>
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<!-- line charts for mail amount per year and month -->
-			<div class="columns">
+			<div class="columns mt-1-5">
 				<div class="column col-6 col-sm-12">
 					<LineChart
 						title="Years"
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<!-- bar charts for mail distribution over daytime and weekday -->
-			<div class="columns">
+			<div class="columns mt-1-5">
 				<div class="column col-6 col-sm-12">
 					<BarChart
 						title="Daytime"
@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<!-- heat map for mail distribution over daytime on weekday -->
-			<div class="columns">
+			<div class="columns mt-1-5">
 				<div class="column col-6 col-sm-12 heatmap">
 					<HeatMap
 						title="Daytime Incoming"
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<!-- footer -->
-			<div class="columns">
+			<div class="columns mt-1-5">
 				<div class="column col-12 text-gray text-center text-sm">
 					<p>
 						This data was retrieved on {{ figure.tstamp }}<br />
@@ -207,6 +207,10 @@ export default {
 					} else {
 						skip = false
 					}
+					// trim trailing zero months
+					let d = new Date()
+					if (d.getFullYear() < year || d.getFullYear() == year && d.getMonth()+1 < month) continue
+					// push data
 					months.push(year + ' ' + labels[month-1])
 					dsin.push(din[year][month])
 					if(dout.hasOwnProperty(year) && dout[year].hasOwnProperty(month)) {
@@ -287,9 +291,6 @@ font-mono = 'Fira Mono', 'Courier New', Courier, monospace
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
 
-.columns
-	margin-top 1rem
-
 h1, h2, h3
 	text-align center
 	font-weight 100
@@ -307,13 +308,9 @@ h1, h2, h3
 	font-family font-mono
 
 .mt-1
-	margin-top .5em
-.mb-1
-	margin-bottom .5em
-.mb-2
-	margin-bottom 1em
-.mr-1
-	margin-right .5em
+	margin-top 1rem
+.mt-1-5
+	margin-top 1.5rem
 
 .chart
 	h3
