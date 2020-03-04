@@ -60,7 +60,7 @@ Now that everything is set, you can run the Python script. A progress indicator 
 ```bash
 $ ./stats.py
 Processing mails...
-100%|██████████████████████████████████| 24790/24790 [00:14<00:00, 1746.85mails/s]
+100%|██████████████████████████████████| 26812/26812 [00:13<00:00, 1924.08mails/s]
 Finished.
 ```
 

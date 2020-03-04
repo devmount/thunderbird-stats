@@ -148,12 +148,12 @@ export default {
 		HeatMap,
 	},
 	stats: {
-		meta: META,
-		mailsPerHour: MAILS_PER_HOUR,
-		mailsPerMonth: MAILS_PER_MONTH,
-		mailsPerYear: MAILS_PER_YEAR,
-		mailsPerWeekday: MAILS_PER_WEEKDAY,
-		mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR,
+		meta: META.total,
+		mailsPerHour: MAILS_PER_HOUR.total,
+		mailsPerMonth: MAILS_PER_MONTH.total,
+		mailsPerYear: MAILS_PER_YEAR.total,
+		mailsPerWeekday: MAILS_PER_WEEKDAY.total,
+		mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR.total,
 	},
 	computed: {
 		figure () {

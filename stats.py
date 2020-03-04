@@ -12,16 +12,17 @@ cfg.read('config.ini')
 maildir = cfg.get('email', 'ThunderbirdAccountPath')
 # own email address(es)
 address = cfg.get('email', 'EmailAddresses').split(',')
+address.append('total')
 
 def stats():
 	""" read all mail files, collect and export data """
 	mailfiles = []
-	meta = { 'in': 0, 'out': 0, 'total': 0, 'unread': 0 }
-	mails_per_year = { 'in': {}, 'out': {} }
-	mails_per_month = { 'in': {}, 'out': {} }
-	mails_per_hour = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
-	mails_per_weekday = { 'in': { i:0 for i in range(7) }, 'out': { i:0 for i in range(7) } }
-	mails_per_weekday_per_hour = { 'in': { i:[0]*24 for i in range(7) }, 'out': { i:[0]*24 for i in range(7) } }
+	meta = { a: { 'in': 0, 'out': 0, 'total': 0, 'unread': 0 } for a in address }
+	mails_per_year = { a: { 'in': {}, 'out': {} } for a in address }
+	mails_per_month = { a: { 'in': {}, 'out': {} } for a in address }
+	mails_per_hour = { a: { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } } for a in address }
+	mails_per_weekday = { a: { 'in': { i:0 for i in range(7) }, 'out': { i:0 for i in range(7) } } for a in address }
+	mails_per_weekday_per_hour = { a: { 'in': { i:[0]*24 for i in range(7) }, 'out': { i:[0]*24 for i in range(7) } } for a in address }
 	# get all mail files
 	for root,_,files in os.walk(maildir):
 		for f in files:
@@ -35,7 +36,7 @@ def stats():
 					if '[1:^9F(^A2=' in line:
 						start = line.find('A2=')+3
 						end = line.find(')]', start)
-						meta['unread'] += int(line[start:end], 16)
+						meta['total']['unread'] += int(line[start:end], 16)
 						break
 
 	# process all mail files to get data
@@ -81,28 +82,28 @@ def stats():
 			# save found data
 			if mailtype is not None and maildate is not None:
 				# build meta data
-				meta[mailtype] += 1
-				meta['total'] += 1
-				if 'oldest' not in meta:
-					meta['oldest'] = maildate
-				if 'newest' not in meta:
-					meta['newest'] = maildate
-				meta['oldest'] = maildate if maildate < meta['oldest'] else meta['oldest']
-				meta['newest'] = maildate if maildate >= meta['newest'] else meta['newest']
+				meta['total'][mailtype] += 1
+				meta['total']['total'] += 1
+				if 'oldest' not in meta['total']:
+					meta['total']['oldest'] = maildate
+				if 'newest' not in meta['total']:
+					meta['total']['newest'] = maildate
+				meta['total']['oldest'] = maildate if maildate < meta['total']['oldest'] else meta['total']['oldest']
+				meta['total']['newest'] = maildate if maildate >= meta['total']['newest'] else meta['total']['newest']
 				# build mails per year and per month
-				if maildate.tm_year in mails_per_year[mailtype]:
-					mails_per_year[mailtype][maildate.tm_year] += 1
-					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] += 1
+				if maildate.tm_year in mails_per_year['total'][mailtype]:
+					mails_per_year['total'][mailtype][maildate.tm_year] += 1
+					mails_per_month['total'][mailtype][maildate.tm_year][maildate.tm_mon] += 1
 				else:
-					mails_per_year[mailtype][maildate.tm_year] = 1
-					mails_per_month[mailtype][maildate.tm_year] = { i:0 for i in range(1,13) }
-					mails_per_month[mailtype][maildate.tm_year][maildate.tm_mon] = 1
+					mails_per_year['total'][mailtype][maildate.tm_year] = 1
+					mails_per_month['total'][mailtype][maildate.tm_year] = { i:0 for i in range(1,13) }
+					mails_per_month['total'][mailtype][maildate.tm_year][maildate.tm_mon] = 1
 				# build number of mails per hour
-				mails_per_hour[mailtype][maildate.tm_hour] += 1
+				mails_per_hour['total'][mailtype][maildate.tm_hour] += 1
 				# build number of mails per weekday
-				mails_per_weekday[mailtype][maildate.tm_wday] += 1
+				mails_per_weekday['total'][mailtype][maildate.tm_wday] += 1
 				# build number of mails per weekday per hour
-				mails_per_weekday_per_hour[mailtype][maildate.tm_wday][maildate.tm_hour] += 1
+				mails_per_weekday_per_hour['total'][mailtype][maildate.tm_wday][maildate.tm_hour] += 1
 				# stop and jump to next file
 				break
 		# for debugging purposes:
@@ -127,13 +128,13 @@ def stats():
 		json.dump(mails_per_weekday_per_hour, f)
 	with open('./src/data/meta.json', 'w') as f:
 		# build featured and meta data
-		meta['days'] = (time.mktime(meta['newest']) - time.mktime(meta['oldest']))/(60*60*24)
-		meta['weeks'] = meta['days']/7
-		meta['months'] = meta['days']/(365/12)
-		meta['years'] = meta['days']/365
-		meta['oldest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['oldest'])
-		meta['newest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['newest'])
-		meta['tstamp'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+		meta['total']['days'] = (time.mktime(meta['total']['newest']) - time.mktime(meta['total']['oldest']))/(60*60*24)
+		meta['total']['weeks'] = meta['total']['days']/7
+		meta['total']['months'] = meta['total']['days']/(365/12)
+		meta['total']['years'] = meta['total']['days']/365
+		meta['total']['oldest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['total']['oldest'])
+		meta['total']['newest'] = time.strftime("%Y-%m-%dT%H:%M:%S", meta['total']['newest'])
+		meta['total']['tstamp'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 		json.dump(meta, f, default=json_datetime)
 
 	return True
