@@ -32,7 +32,7 @@ def stats():
 			# get directory information: unread mails count
 			if file_extension == '.msf':
 				for line in reversed(list(open(os.path.join(root, f), 'r', encoding='latin1'))):
-					if line.startswith('[1:^9F(^A2='):
+					if '[1:^9F(^A2=' in line:
 						start = line.find('A2=')+3
 						end = line.find(')]', start)
 						meta['unread'] += int(line[start:end], 16)
