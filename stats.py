@@ -9,7 +9,7 @@ from tqdm import tqdm
 cfg = ConfigParser()
 cfg.read('config.ini')
 # root directory of the maildir account directory of thunderbird
-maildir = cfg.get('email', 'ThunderbirdProfilePath')
+maildir = cfg.get('email', 'ThunderbirdAccountPath')
 # own email address(es)
 address = cfg.get('email', 'EmailAddresses').split(',')
 

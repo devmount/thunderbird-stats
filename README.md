@@ -42,11 +42,11 @@ chmod +x ./stats.py
 
 ### Configuration
 
-Before using this tool, you have to set two settings in the `config.ini`: The file path to your Thunderbird profile and your own email address(es) for the Python script to recognize, which emails were sent or received. You can determine your profile file path by right-clicking on your Thunderbird account > Settings > Server-Settings > Scroll to the bottom. Your email addresses are comma seperated without spaces. See this example:
+Before using this tool, you have to set two settings in the `config.ini`: The file path to your Thunderbird profile email account and your own email address(es) for the Python script to recognize, which emails were sent or received. You can determine your email account file path by right-clicking on your Thunderbird account > Settings > Server-Settings > Scroll to the bottom. Your email addresses are comma seperated without spaces. See this example:
 
 ```ini
 [email]
-ThunderbirdProfilePath = /path/to/Thunderbird/Profiles/abcdefg.default/ImapMail/server
+ThunderbirdAccountPath = /path/to/Thunderbird/Profiles/abcdefg.default/ImapMail/account
 EmailAddresses = your@email.com,test@email.com
 ```
 
