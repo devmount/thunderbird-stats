@@ -86,7 +86,7 @@
 						title="Daytime Incoming"
 						description="Number of incoming emails per weekday per hour"
 						rgb="48, 206, 241"
-						:dataset="$options.stats.mailsPerWeekdayPerHour.in"
+						:dataset="stats.mailsPerWeekdayPerHour.in"
 					/>
 				</div>
 				<div class="column col-6 col-sm-12 heatmap">
@@ -94,7 +94,7 @@
 						title="Daytime Outgoing"
 						description="Number of outgoing emails per weekday per hour"
 						rgb="237, 47, 71"
-						:dataset="$options.stats.mailsPerWeekdayPerHour.out"
+						:dataset="stats.mailsPerWeekdayPerHour.out"
 					/>
 				</div>
 			</div>
@@ -147,17 +147,19 @@ export default {
 		BarChart,
 		HeatMap,
 	},
-	stats: {
-		meta: META.total,
-		mailsPerHour: MAILS_PER_HOUR.total,
-		mailsPerMonth: MAILS_PER_MONTH.total,
-		mailsPerYear: MAILS_PER_YEAR.total,
-		mailsPerWeekday: MAILS_PER_WEEKDAY.total,
-		mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR.total,
-	},
 	computed: {
+		stats () {
+			return {
+				meta: META.total,
+				mailsPerHour: MAILS_PER_HOUR.total,
+				mailsPerMonth: MAILS_PER_MONTH.total,
+				mailsPerYear: MAILS_PER_YEAR.total,
+				mailsPerWeekday: MAILS_PER_WEEKDAY.total,
+				mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR.total,
+			}
+		},
 		figure () {
-			var meta = this.$options.stats.meta
+			var meta = this.stats.meta
 			var tstamp = new Date(meta.tstamp)
 			return {
 				in: meta.in.toLocaleString(),
@@ -178,8 +180,8 @@ export default {
 			}
 		},
 		mailsPerYear () {
-			var din = this.$options.stats.mailsPerYear.in
-			var dout = this.$options.stats.mailsPerYear.out
+			var din = this.stats.mailsPerYear.in
+			var dout = this.stats.mailsPerYear.out
 			var years = [], dsin = [], dsout = []
 			for (let y = this.figure.oldest.getFullYear(); y <= this.figure.newest.getFullYear(); ++y) {
 				years.push(y)
@@ -195,8 +197,8 @@ export default {
 			}
 		},
 		mailsPerMonth () {
-			var din = this.$options.stats.mailsPerMonth.in
-			var dout = this.$options.stats.mailsPerMonth.out
+			var din = this.stats.mailsPerMonth.in
+			var dout = this.stats.mailsPerMonth.out
 			var months = [], dsin = [], dsout = [], skip = true
 			var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			for (const year in din) {
@@ -229,8 +231,8 @@ export default {
 			}
 		},
 		mailsPerHour () {
-			var din = this.$options.stats.mailsPerHour.in
-			var dout = this.$options.stats.mailsPerHour.out
+			var din = this.stats.mailsPerHour.in
+			var dout = this.stats.mailsPerHour.out
 			var hours = [], dsin = [], dsout = []
 			for (const hour in din) {
 				hours.push(hour)
@@ -246,8 +248,8 @@ export default {
 			}
 		},
 		mailsPerWeekday () {
-			var din = this.$options.stats.mailsPerWeekday.in
-			var dout = this.$options.stats.mailsPerWeekday.out
+			var din = this.stats.mailsPerWeekday.in
+			var dout = this.stats.mailsPerWeekday.out
 			var weekdays = [], dsin = [], dsout = []
 			var days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 			for (const weekday in din) {
