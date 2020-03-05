@@ -78,7 +78,9 @@ export default {
 	},
 	watch: {
 		datasets () {
-			this.draw()
+			this.chart.data.labels = this.labels
+			this.chart.data.datasets = this.currentData
+			this.chart.update()
 		}
 	}
 }
