@@ -3,8 +3,13 @@
 		<div class="container grid-lg">
 			<div class="columns mt-1-5">
 				<!-- title -->
-				<div class="column col-6 col-md-12">
+				<div class="column col-8 col-md-12">
 					<h1 class="text-left">Thunderbird Email Stats</h1>
+				</div>
+				<div class="column col-4 col-md-12">
+					<select v-model="view" class="form-select">
+						<option v-for="(a,i) in addresses" :key="i" :value="a">{{ a }}</option>
+					</select>
 				</div>
 			</div>
 			<div class="columns mt-1">
@@ -16,9 +21,10 @@
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-gray">Mails unread</div>
-					<div class="figure">{{ figure.unread }}</div>
+					<div class="figure" v-if="view == 'total'">{{ figure.unread }}</div>
+					<div class="figure" v-else>n.a.</div>
 					<div class="text-gray" v-if="figure.unread > 0">{{ figure.unreadPercentage }}% of total</div>
-					<div class="text-gray" v-else>Nice work!</div>
+					<div class="text-gray" v-else-if="view == 'total'">Nice work!</div>
 				</div>
 				<div class="column col-2 col-md-3 col-sm-6 text-center">
 					<div class="text-primary">Mails received</div>
@@ -147,15 +153,23 @@ export default {
 		BarChart,
 		HeatMap,
 	},
+	data () {
+		return {
+			view: 'total'
+		}
+	},
 	computed: {
+		addresses () {
+			return Object.keys(META).reverse()
+		},
 		stats () {
 			return {
-				meta: META.total,
-				mailsPerHour: MAILS_PER_HOUR.total,
-				mailsPerMonth: MAILS_PER_MONTH.total,
-				mailsPerYear: MAILS_PER_YEAR.total,
-				mailsPerWeekday: MAILS_PER_WEEKDAY.total,
-				mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR.total,
+				meta: META[this.view],
+				mailsPerHour: MAILS_PER_HOUR[this.view],
+				mailsPerMonth: MAILS_PER_MONTH[this.view],
+				mailsPerYear: MAILS_PER_YEAR[this.view],
+				mailsPerWeekday: MAILS_PER_WEEKDAY[this.view],
+				mailsPerWeekdayPerHour: MAILS_PER_WEEKDAY_PER_HOUR[this.view],
 			}
 		},
 		figure () {
