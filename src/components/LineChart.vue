@@ -17,11 +17,17 @@ export default {
 	},
 	data () {
 		return {
-			id: Math.random().toString(36).substring(7)
+			id: Math.random().toString(36).substring(7),
+			chart: null
 		}
 	},
 	mounted () {
 		if (this.title != '' && this.labels && this.datasets) {
+			this.draw()
+		}
+	},
+	computed: {
+		currentData () {
 			let datasets = []
 			for (let i = 0; i < this.datasets.length; i++) {
 				const dataset = this.datasets[i];
@@ -35,10 +41,15 @@ export default {
 					backgroundColor: dataset.bcolor,
 				})
 			}
-			new Chart(this.id, {
+			return datasets
+		}
+	},
+	methods: {
+		draw () {
+			this.chart = new Chart(this.id, {
 				type: 'line',
 				data: {
-					datasets: datasets,
+					datasets: this.currentData,
 					labels: this.labels,
 				},
 				options: {
@@ -63,6 +74,11 @@ export default {
 					}
 				}
 			})
+		}
+	},
+	watch: {
+		datasets () {
+			this.draw()
 		}
 	}
 }
