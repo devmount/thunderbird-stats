@@ -3,6 +3,7 @@
 node_modules
 /dist
 /src/data
+config.ini
 
 # local env files
 .env.local
