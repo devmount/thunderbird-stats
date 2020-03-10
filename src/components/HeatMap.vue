@@ -52,4 +52,5 @@ export default {
 		.cell, .legend
 			height 20px
 			width calc(100%/8)
+			transition background .8s ease
 </style>
