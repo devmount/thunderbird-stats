@@ -77,9 +77,26 @@ export default {
 		}
 	},
 	watch: {
+		// update chart if data changes
 		datasets () {
 			this.chart.data.labels = this.labels
-			this.chart.data.datasets = this.currentData
+			if (this.chart.data.datasets.length >= this.currentData.length) {
+				this.chart.data.datasets.forEach((d, i) => {
+					if (i in this.currentData) {
+						d.data = this.currentData[i].data
+					} else {
+						this.chart.data.datasets.pop()
+					}
+				})
+			} else {
+				this.currentData.forEach((d, i) => {
+					if (i in this.chart.data.datasets) {
+						this.chart.data.datasets[i].data = d.data
+					} else {
+						this.chart.data.datasets.push(d)
+					}
+				})
+			}
 			this.chart.update()
 		}
 	}
