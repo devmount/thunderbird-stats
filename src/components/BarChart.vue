@@ -35,9 +35,8 @@ export default {
 					label: dataset.label,
 					data: dataset.data,
 					backgroundColor: dataset.bcolor,
-					borderWidth: 2,
+					borderWidth: { top: 2 },
 					borderColor: dataset.color,
-					borderSkipped: false,
 					barPercentage: 1,
 					categoryPercentage: .6,
 				})
