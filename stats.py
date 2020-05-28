@@ -28,6 +28,12 @@ def stats():
 	mails_per_hour['total'] = { 'in': { i:0 for i in range(24) }, 'out': { i:0 for i in range(24) } }
 	mails_per_weekday['total'] = { 'in': { i:0 for i in range(7) }, 'out': { i:0 for i in range(7) } }
 	mails_per_weekday_per_hour['total'] = { 'in': { i:[0]*24 for i in range(7) }, 'out': { i:[0]*24 for i in range(7) } }
+	# check configured mail directory
+	if not os.path.exists(maildir):
+		print('Error: The configured mail directory doesn\' exist:')
+		print(maildir)
+		print('Please set the corresponding path in config.ini > ThunderbirdAccountPath')
+		return False
 	# get all mail files
 	for root,_,files in os.walk(maildir):
 		for f in files:
