@@ -51,7 +51,7 @@ EmailAddresses = your@email.com,test@email.com
 ```
 
 > **IMPORTANT**  
-> Your Thunderbird account **must** be configured as `maildir`, where each message is stored as a seperate file. This tool won't work with `mbox` accounts.
+> Unfortunately your Thunderbird account **must** be configured as `maildir`, where each message is stored as a seperate file. This tool won't work with `mbox` accounts. `maildir` is on it's way to become the [default mail storage format](https://developer.thunderbird.net/planning/roadmap#maildir-tb-78), but until than the Thunderbird team discurages the use of `maildir` (though I personally use it for more than a year and never had problems with it).
 
 ### Usage
 
