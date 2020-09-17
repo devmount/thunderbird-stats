@@ -109,7 +109,7 @@
 				<div class="column col-12 text-gray text-center text-sm">
 					<p>
 						This data was retrieved on {{ figure.tstamp }}<br />
-						Thunderbird Stats v{{ $options.version }} - star and fork this project on <a href="https://github.com/devmount/thunderbird-stats">Github</a>
+						Thunderbird Stats v{{ appVersion }} - star and fork this project on <a href="https://github.com/devmount/thunderbird-stats">Github</a>
 					</p>
 				</div>
 			</div>
@@ -147,7 +147,6 @@ Chart.defaults.global.hover.mode = 'index'
 
 export default {
 	name: 'app',
-	version: '0.1.3',
 	components: {
 		LineChart,
 		BarChart,
@@ -159,6 +158,9 @@ export default {
 		}
 	},
 	computed: {
+		appVersion() {
+			return process.env.PACKAGE_VERSION;
+		},
 		addresses () {
 			return Object.keys(META).reverse()
 		},
