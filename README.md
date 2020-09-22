@@ -1,6 +1,6 @@
 # Thunderbird Email Stats
 
-[![release](https://img.shields.io/badge/release-v0.1.4-30cef2.svg?style=flat-square)](https://github.com/devmount/thunderbird-stats/releases) [![last commit](https://img.shields.io/github/last-commit/devmount/thunderbird-stats?label=updated&color=30cef2&style=flat-square)](https://github.com/devmount/thunderbird-stats/commits/master) [![license](https://img.shields.io/badge/license-MIT-30cef2.svg?style=flat-square)](./LICENSE) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-30cef2.svg?style=flat-square)](./CONTRIBUTING.md)
+[![release](https://img.shields.io/badge/release-v0.1.4-30cef2.svg?style=flat-square)](https://github.com/devmount/thunderbird-stats/releases) [![last commit](https://img.shields.io/github/last-commit/devmount/thunderbird-stats?label=updated&color=30cef2&style=flat-square)](https://github.com/devmount/thunderbird-stats/commits/master) [![license](https://img.shields.io/badge/license-MIT-30cef2.svg?style=flat-square)](./LICENSE) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-30cef2.svg?style=flat-square)](./.github/CONTRIBUTING.md)
 
 Generate simple but beautiful analytics of your Thunderbird email account
 
