@@ -6,6 +6,9 @@ Generate simple but beautiful analytics of your Thunderbird email account
 
 ![Thunderbird Email Stats Screencast GIF](https://user-images.githubusercontent.com/5441654/93454804-c2ec1700-f8db-11ea-9db3-74ca68a77576.gif)
 
+> **IMPORTANT**  
+> This project only gets security updates, since its functionality was ported to [a native Thunderbird add-on](https://github.com/devmount/third-stats). The three main reasons for the switch: This project depends on the mail storage engine, the stats creation process is a little too complex and the stats page cannot be accessed directly from Thunderbird.
+
 ## Get started
 
 This toolkit uses Python to retrieve the data from your Thunderbird mail account and store it in `json` format and a Vue.js based web application to present the data in numbers and charts.
