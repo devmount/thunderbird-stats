@@ -5,7 +5,7 @@
 Generate simple but beautiful analytics of your Thunderbird email account
 
 > **IMPORTANT**  
-> This project only gets security updates, since its functionality was ported to [a native Thunderbird add-on](https://github.com/devmount/third-stats). The three main reasons for the switch: This project depends on the mail storage engine, the stats creation process is too complex and the stats page cannot be accessed directly from Thunderbird.
+> This project archived now, since its functionality was ported to a native Thunderbird add-on [ThirdStats](https://github.com/devmount/third-stats). The three main reasons for the switch: This project depends on the mail storage engine, the stats creation process is too complex and the stats page cannot be accessed directly from Thunderbird.
 
 ![Thunderbird Email Stats Screencast GIF](https://user-images.githubusercontent.com/5441654/93454804-c2ec1700-f8db-11ea-9db3-74ca68a77576.gif)
 
